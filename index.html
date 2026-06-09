@@ -579,28 +579,10 @@
       <div class="section-inner">
         <div class="section-header">
           <h2 class="section-title">Próximos Shows</h2>
-          <a href="#" class="section-link">Ver todos →</a>
         </div>
-
-        <div class="shows-list">
-
-          <div class="show-item" style="border: 2px solid var(--purple); border-radius: 12px;">
-            <div class="show-date">
-              <div class="month">Jun</div>
-              <div class="day">27</div>
-              <div class="year">2026</div>
-            </div>
-            <div class="show-info">
-              <div class="venue">Starlyn Ramírez: El Sobreviviente 🎤</div>
-              <div class="location">Velvet Room · Av. Enriquillo 28, Plaza Bloom · Santo Domingo, RD</div>
-              <div class="details">Show: 7:00 PM · Promo 3x2 a RD$999 c/u</div>
-            </div>
-            <div></div>
-            <a href="https://ticketmax.org/evento/243840/" target="_blank" class="btn-tickets">Boletas</a>
-          </div>
-
+        <div class="shows-list" id="shows-list">
+          <p style="color:var(--brown);text-align:center;padding:24px">Cargando shows…</p>
         </div>
-
         <p style="margin-top:20px;font-size:14px;color:var(--brown);text-align:center">
           Más fechas próximamente. Suscríbete abajo para ser el primero en enterarte.
         </p>
@@ -612,58 +594,9 @@
       <div class="section-inner">
         <div class="section-header">
           <h2 class="section-title">Especiales de Comedia</h2>
-          <a href="#" class="section-link">Ver todo →</a>
         </div>
-
-        <div class="grid-4">
-
-          <div class="card">
-            <div class="card-img">
-              <img src="https://img.youtube.com/vi/ywnWCcExTG8/maxresdefault.jpg" alt="La 4ta Dosis" loading="lazy" />
-              <span class="card-badge new">Nuevo</span>
-            </div>
-            <div class="card-body">
-              <div class="card-format">Especial Completo · YouTube</div>
-              <div class="card-title">La 4ta Dosis</div>
-              <a href="https://www.youtube.com/watch?v=ywnWCcExTG8" target="_blank" class="btn-add" style="background:var(--red);text-align:center;display:block;text-decoration:none;color:#fff">▶ Ver en YouTube</a>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-img">
-              <img src="https://img.youtube.com/vi/dz95-muaS5k/maxresdefault.jpg" alt="Clandestinos: Lado A" loading="lazy" />
-            </div>
-            <div class="card-body">
-              <div class="card-format">Especial · YouTube</div>
-              <div class="card-title">Clandestinos: Lado A</div>
-              <a href="https://youtu.be/dz95-muaS5k" target="_blank" class="btn-add" style="background:var(--red);text-align:center;display:block;text-decoration:none;color:#fff">▶ Ver en YouTube</a>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-img">
-              <img src="https://img.youtube.com/vi/66K7OY6usyk/maxresdefault.jpg" alt="Starlyn & Elias - La Última Brisa del Año" loading="lazy" />
-              <span class="card-badge">Colaboración</span>
-            </div>
-            <div class="card-body">
-              <div class="card-format">Especial · YouTube</div>
-              <div class="card-title">La Última Brisa del Año</div>
-              <a href="https://youtu.be/66K7OY6usyk" target="_blank" class="btn-add" style="background:var(--red);text-align:center;display:block;text-decoration:none;color:#fff">▶ Ver en YouTube</a>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-img">
-              <img src="https://img.youtube.com/vi/kX5n4yjNmAM/maxresdefault.jpg" alt="Los Papakukus - Ariel Santana y Starlyn Ramírez" loading="lazy" />
-              <span class="card-badge">Colaboración</span>
-            </div>
-            <div class="card-body">
-              <div class="card-format">Stand Up · YouTube</div>
-              <div class="card-title">Los Papakukus</div>
-              <a href="https://youtu.be/kX5n4yjNmAM" target="_blank" class="btn-add" style="background:var(--red);text-align:center;display:block;text-decoration:none;color:#fff">▶ Ver en YouTube</a>
-            </div>
-          </div>
-
+        <div class="grid-4" id="specials-grid">
+          <p style="color:var(--brown);padding:24px">Cargando especiales…</p>
         </div>
       </div>
     </section>
@@ -876,7 +809,70 @@
     </div>
   </footer>
 
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
+    // ── NETLIFY IDENTITY ──
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', user => {
+        if (!user) window.netlifyIdentity.on('login', () => { document.location.href = '/admin/'; });
+      });
+    }
+
+    // ── SHOWS ──
+    fetch('/_data/shows.json')
+      .then(r => r.json())
+      .then(data => {
+        const list = document.getElementById('shows-list');
+        if (!data.shows || data.shows.length === 0) {
+          list.innerHTML = '<p style="text-align:center;color:var(--brown);padding:24px">No hay shows programados por el momento.</p>';
+          return;
+        }
+        list.innerHTML = data.shows.map(s => `
+          <div class="show-item" style="border:2px solid var(--purple);border-radius:12px;">
+            <div class="show-date">
+              <div class="month">${s.month}</div>
+              <div class="day">${s.day}</div>
+              <div class="year">${s.year}</div>
+            </div>
+            <div class="show-info">
+              <div class="venue">${s.venue}</div>
+              <div class="location">${s.city}</div>
+              <div class="details">${s.details}</div>
+            </div>
+            <div></div>
+            ${s.soldOut
+              ? '<span class="sold-out">Agotado</span>'
+              : `<a href="${s.ticketUrl}" target="_blank" class="btn-tickets">Boletas</a>`
+            }
+          </div>`).join('');
+      })
+      .catch(() => {
+        document.getElementById('shows-list').innerHTML =
+          '<p style="text-align:center;color:var(--brown);padding:24px">No hay shows programados por el momento.</p>';
+      });
+
+    // ── SPECIALS ──
+    fetch('/_data/specials.json')
+      .then(r => r.json())
+      .then(data => {
+        const grid = document.getElementById('specials-grid');
+        grid.innerHTML = data.specials.map(s => `
+          <div class="card">
+            <div class="card-img">
+              <img src="https://img.youtube.com/vi/${s.youtubeId}/maxresdefault.jpg" alt="${s.title}" loading="lazy" />
+              ${s.badge ? `<span class="card-badge${s.badgeNew ? ' new' : ''}">${s.badge}</span>` : ''}
+            </div>
+            <div class="card-body">
+              <div class="card-format">${s.format}</div>
+              <div class="card-title">${s.title}</div>
+              <a href="https://www.youtube.com/watch?v=${s.youtubeId}" target="_blank"
+                 class="btn-add" style="background:var(--red);text-align:center;display:block;text-decoration:none;color:#fff">
+                ▶ Ver en YouTube
+              </a>
+            </div>
+          </div>`).join('');
+      });
+
     // ── MOBILE MENU ──
     const ham = document.getElementById('hamburger');
     const menu = document.getElementById('mobile-menu');

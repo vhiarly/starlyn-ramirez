@@ -1,0 +1,48 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: es
+
+media_folder: images
+public_folder: /images
+
+collections:
+  - name: shows
+    label: "📅 Próximos Shows"
+    files:
+      - label: "Lista de Shows"
+        name: shows
+        file: _data/shows.json
+        fields:
+          - label: Shows
+            name: shows
+            widget: list
+            summary: "{{fields.venue}} — {{fields.city}}"
+            fields:
+              - { label: "Día",            name: day,       widget: string, hint: "Ej: 27" }
+              - { label: "Mes",            name: month,     widget: string, hint: "Ej: Jun" }
+              - { label: "Año",            name: year,      widget: string, hint: "Ej: 2026" }
+              - { label: "Nombre del Show", name: venue,    widget: string }
+              - { label: "Lugar y Ciudad", name: city,      widget: string, hint: "Ej: Velvet Room · Santo Domingo, RD" }
+              - { label: "Detalles",       name: details,   widget: string, hint: "Ej: Show: 8:00 PM · Precio: RD$500" }
+              - { label: "Link de Boletas", name: ticketUrl, widget: string }
+              - { label: "Agotado",        name: soldOut,   widget: boolean, default: false }
+
+  - name: specials
+    label: "🎬 Especiales"
+    files:
+      - label: "Lista de Especiales"
+        name: specials
+        file: _data/specials.json
+        fields:
+          - label: Especiales
+            name: specials
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Título",         name: title,     widget: string }
+              - { label: "Formato",        name: format,    widget: string, hint: "Ej: Especial Completo · YouTube" }
+              - { label: "ID de YouTube",  name: youtubeId, widget: string, hint: "Los caracteres al final del link de YouTube. Ej: ywnWCcExTG8" }
+              - { label: "Badge",          name: badge,     widget: string, required: false, hint: "Ej: Nuevo, Colaboración — dejar vacío para no mostrar" }
+              - { label: "Badge estilo Nuevo", name: badgeNew, widget: boolean, default: false }

@@ -1,0 +1,32 @@
+{
+  "specials": [
+    {
+      "title": "La 4ta Dosis",
+      "format": "Especial Completo · YouTube",
+      "youtubeId": "ywnWCcExTG8",
+      "badge": "Nuevo",
+      "badgeNew": true
+    },
+    {
+      "title": "Clandestinos: Lado A",
+      "format": "Especial · YouTube",
+      "youtubeId": "dz95-muaS5k",
+      "badge": "",
+      "badgeNew": false
+    },
+    {
+      "title": "La Última Brisa del Año",
+      "format": "Especial · YouTube",
+      "youtubeId": "66K7OY6usyk",
+      "badge": "Colaboración",
+      "badgeNew": false
+    },
+    {
+      "title": "Los Papakukus",
+      "format": "Stand Up · YouTube",
+      "youtubeId": "kX5n4yjNmAM",
+      "badge": "Colaboración",
+      "badgeNew": false
+    }
+  ]
+}
