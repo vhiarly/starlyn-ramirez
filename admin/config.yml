@@ -29,6 +29,21 @@ collections:
               - { label: "Link de Boletas", name: ticketUrl, widget: string }
               - { label: "Agotado",        name: soldOut,   widget: boolean, default: false }
 
+  - name: bio
+    label: "📝 Biografía"
+    files:
+      - label: "Texto de Biografía"
+        name: bio
+        file: _data/bio.json
+        fields:
+          - { label: "Introducción",        name: intro, widget: text }
+          - { label: "Párrafo 1 (Formación)", name: p1,  widget: text }
+          - { label: "Párrafo 2 (Radio/TV)", name: p2,   widget: text }
+          - { label: "Párrafo 3 (Stand-up)", name: p3,   widget: text }
+          - { label: "Párrafo 4 (Botón de Oro / Vainas)", name: p4, widget: text }
+          - { label: "Párrafo 5 (Sambil)",   name: p5,   widget: text }
+          - { label: "Párrafo 6 (Estilo de humor)", name: p6, widget: text }
+
   - name: specials
     label: "🎬 Especiales"
     files:

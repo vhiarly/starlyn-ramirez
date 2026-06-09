@@ -670,43 +670,8 @@
           <div class="about-text">
             <div class="about-label">Sobre Mí</div>
             <h2 class="about-title">Starlyn<br>Ramírez</h2>
-            <div class="about-body">
-              <p>
-                Comediante, locutor y productor de radio y televisión dominicano, reconocido como una
-                de las figuras más relevantes de la escena del stand-up comedy en la República Dominicana.
-              </p>
-              <p>
-                Con formación en ingeniería, Starlyn decidió seguir su verdadera pasión por los medios
-                y el humor. Hoy se ha consolidado como referente de una nueva generación de comediantes
-                y creadores de contenido digitales en el país.
-              </p>
-              <p>
-                En <strong>radio y televisión</strong>, es ampliamente conocido por su participación en
-                <em>Párate Ya!</em> en Los40, y ha trabajado como productor de espacios televisivos,
-                destacándose por su versatilidad detrás y frente a las cámaras.
-              </p>
-              <p>
-                En <strong>stand-up comedy</strong>, inspirado por figuras como Carlos Sánchez y Elías Serulle,
-                se convirtió en un pilar del stand-up dominicano. Ha presentado varios shows en vivo,
-                entre ellos <em>Comiquísimo</em>, <em>Ya Se Siente La Brisa</em>, <em>En Lo Plático</em>,
-                <em>La 4ta Dosis</em> y <em>Clandestinos</em>.
-              </p>
-              <p>
-                Ganó notoriedad nacional al obtener el <strong>Botón de Oro</strong> en
-                <em>Dominicana's Got Talent</em> de manos de Raymond Pozo, y es co-creador de
-                <strong><a href="https://www.instagram.com/vainasquenunca/" target="_blank" style="color:var(--purple)">@vainasquenunca</a></strong>,
-                proyecto viral en Instagram y YouTube que retrata con humor las vivencias cotidianas
-                de los dominicanos.
-              </p>
-              <p>
-                Es también <strong>Embajador del Centro Comercial Sambil</strong>, reconocimiento
-                que refleja su creciente influencia como figura pública en el país.
-              </p>
-              <p>
-                Su humor observacional busca el equilibrio entre la risa y el mensaje — una mirada
-                inteligente sobre la realidad de la clase media dominicana, sin política ni religión,
-                enfocada en lo universal.
-              </p>
+            <div class="about-body" id="bio-body">
+              <p>Cargando...</p>
             </div>
 
             <div class="about-contact">
@@ -871,6 +836,20 @@
               </a>
             </div>
           </div>`).join('');
+      });
+
+    // ── BIO ──
+    fetch('/_data/bio.json')
+      .then(r => r.json())
+      .then(b => {
+        document.getElementById('bio-body').innerHTML = `
+          <p>${b.intro}</p>
+          <p>${b.p1}</p>
+          <p>${b.p2}</p>
+          <p>${b.p3}</p>
+          <p>${b.p4}</p>
+          <p>${b.p5}</p>
+          <p>${b.p6}</p>`;
       });
 
     // ── MOBILE MENU ──
