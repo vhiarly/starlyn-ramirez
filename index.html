@@ -701,8 +701,10 @@
       <div class="newsletter-inner">
         <h2>Únete a la lista de correo</h2>
         <p>Sé el primero en enterarte de nuevos shows, especiales y noticias exclusivas.</p>
-        <form class="email-form" onsubmit="handleSub(event)">
-          <input class="email-input" type="email" placeholder="tu@correo.com" required aria-label="Correo electrónico" />
+        <form class="email-form" name="suscriptores" netlify netlify-honeypot="bot-field" onsubmit="handleSub(event)">
+          <input type="hidden" name="form-name" value="suscriptores" />
+          <input type="hidden" name="bot-field" />
+          <input class="email-input" type="email" name="email" placeholder="tu@correo.com" required aria-label="Correo electrónico" />
           <button class="btn-sub" type="submit">Suscribirme</button>
         </form>
         <p id="sub-msg" style="margin-top:14px;font-size:14px;opacity:0;transition:opacity .3s"></p>
