@@ -237,7 +237,7 @@
     .show-item:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); }
 
     .show-item.has-flyer {
-      grid-template-columns: 1fr 180px;
+      grid-template-columns: 180px 1fr;
       align-items: center;
       padding: 20px 24px;
     }
@@ -254,7 +254,7 @@
       display: block;
     }
     @media (max-width: 640px) {
-      .show-item.has-flyer { grid-template-columns: 1fr 110px; padding: 16px; }
+      .show-item.has-flyer { grid-template-columns: 110px 1fr; padding: 16px; }
       .show-item.has-flyer .show-right img { width: 110px; }
     }
 
@@ -861,14 +861,14 @@
           if (s.image) {
             return `
               <div class="show-item has-flyer" style="border:2px solid var(--purple);border-radius:12px;">
+                <div class="show-right">
+                  <img src="${s.image}" alt="Flyer ${s.venue}" />
+                </div>
                 <div class="show-left">
                   <div style="font-size:18px;font-weight:800;color:var(--dark);line-height:1.2;">${s.venue}</div>
                   <div style="font-size:14px;color:var(--brown);margin-top:2px;">${s.city}</div>
                   <div style="font-size:13px;color:#888;margin-top:2px;">${s.details}</div>
                   <div style="margin-top:14px;">${ticketBlock}</div>
-                </div>
-                <div class="show-right">
-                  <img src="${s.image}" alt="Flyer ${s.venue}" />
                 </div>
               </div>`;
           }
