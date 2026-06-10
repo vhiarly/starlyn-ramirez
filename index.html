@@ -71,7 +71,7 @@
     }
 
     .logo img {
-      height: 54px;
+      height: 46px;
       width: auto;
       display: block;
     }
@@ -553,6 +553,10 @@
     @media (max-width: 640px) {
       .nav-links { display: none; }
       .hamburger { display: flex; }
+      .header-inner { position: relative; justify-content: center; }
+      .logo { position: absolute; left: 50%; transform: translateX(-50%); }
+      .logo img { height: 38px; }
+      .nav-actions { margin-left: auto; }
       .grid-4 { grid-template-columns: repeat(2, 1fr); gap: 14px; }
       .footer-grid { grid-template-columns: 1fr; }
       .show-item {
