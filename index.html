@@ -236,37 +236,26 @@
     }
     .show-item:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); }
 
-    .show-poster {
-      border-radius: 14px;
-      overflow: hidden;
-      border: 2px solid var(--purple);
-      max-width: 480px;
+    .show-item.has-flyer {
+      grid-template-columns: 1fr 180px;
+      align-items: center;
+      padding: 20px 24px;
     }
-    .show-poster-img {
-      width: 100%;
+    .show-item.has-flyer .show-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .show-item.has-flyer .show-right img {
+      width: 180px;
       aspect-ratio: 3/4;
       object-fit: cover;
+      border-radius: 10px;
       display: block;
     }
-    .show-poster-info {
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      background: var(--white);
-    }
-    .show-poster-label {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--dark);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .show-poster-label span {
-      color: var(--brown);
-      font-weight: 500;
+    @media (max-width: 640px) {
+      .show-item.has-flyer { grid-template-columns: 1fr 110px; padding: 16px; }
+      .show-item.has-flyer .show-right img { width: 110px; }
     }
 
     .show-date {
@@ -871,17 +860,15 @@
 
           if (s.image) {
             return `
-              <div class="show-poster">
-                <img src="${s.image}" alt="Flyer ${s.venue}" class="show-poster-img" />
-                <div class="show-poster-info" style="flex-direction:column;align-items:flex-start;gap:6px;">
-                  <div style="display:flex;align-items:center;justify-content:space-between;width:100%;gap:12px;flex-wrap:wrap;">
-                    <div>
-                      <div class="show-poster-label">${s.venue} <span>· ${s.day} ${s.month} ${s.year}</span></div>
-                      <div style="font-size:13px;color:var(--brown);margin-top:3px;">${s.city}</div>
-                      <div style="font-size:13px;color:#888;margin-top:2px;">${s.details}</div>
-                    </div>
-                    ${ticketBlock}
-                  </div>
+              <div class="show-item has-flyer" style="border:2px solid var(--purple);border-radius:12px;">
+                <div class="show-left">
+                  <div style="font-size:18px;font-weight:800;color:var(--dark);line-height:1.2;">${s.venue}</div>
+                  <div style="font-size:14px;color:var(--brown);margin-top:2px;">${s.city}</div>
+                  <div style="font-size:13px;color:#888;margin-top:2px;">${s.details}</div>
+                  <div style="margin-top:14px;">${ticketBlock}</div>
+                </div>
+                <div class="show-right">
+                  <img src="${s.image}" alt="Flyer ${s.venue}" />
                 </div>
               </div>`;
           }
