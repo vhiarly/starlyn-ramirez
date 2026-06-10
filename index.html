@@ -236,27 +236,37 @@
     }
     .show-item:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); }
 
-    .show-thumb {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      border-radius: 8px;
+    .show-poster {
+      border-radius: 14px;
       overflow: hidden;
-      flex-shrink: 0;
+      border: 2px solid var(--purple);
+      max-width: 480px;
     }
-    .show-thumb img {
-      width: 100%; height: 100%;
+    .show-poster-img {
+      width: 100%;
+      aspect-ratio: 3/4;
       object-fit: cover;
       display: block;
     }
-    .show-thumb .show-date {
-      position: absolute; inset: 0;
-      border-radius: 0;
-      background: rgba(26,23,20,.55);
-      backdrop-filter: blur(1px);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 0;
+    .show-poster-info {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--white);
+    }
+    .show-poster-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .show-poster-label span {
+      color: var(--brown);
+      font-weight: 500;
     }
 
     .show-date {
@@ -547,7 +557,6 @@
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .show-item { grid-template-columns: 80px 1fr auto; }
       .show-item .btn-tickets { grid-column: 3; }
-      .show-thumb { width: 80px; height: 80px; }
     }
 
     @media (max-width: 640px) {
@@ -565,7 +574,6 @@
       }
       .show-item .sold-out,
       .show-item .btn-tickets { grid-column: 1 / -1; }
-      .show-thumb { width: 70px; height: 70px; }
       .album-card { flex-direction: column; }
     }
 
@@ -861,16 +869,26 @@
             ? '<span class="sold-out">Agotado</span>'
             : `<a href="${s.ticketUrl}" target="_blank" class="btn-tickets">Boletas</a>`;
 
-          const leftCol = s.image
-            ? `<div class="show-thumb">
-                 <img src="${s.image}" alt="Flyer ${s.venue}" />
-                 ${dateBlock}
-               </div>`
-            : dateBlock;
+          if (s.image) {
+            return `
+              <div class="show-poster">
+                <img src="${s.image}" alt="Flyer ${s.venue}" class="show-poster-img" />
+                <div class="show-poster-info" style="flex-direction:column;align-items:flex-start;gap:6px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;width:100%;gap:12px;flex-wrap:wrap;">
+                    <div>
+                      <div class="show-poster-label">${s.venue} <span>· ${s.day} ${s.month} ${s.year}</span></div>
+                      <div style="font-size:13px;color:var(--brown);margin-top:3px;">${s.city}</div>
+                      <div style="font-size:13px;color:#888;margin-top:2px;">${s.details}</div>
+                    </div>
+                    ${ticketBlock}
+                  </div>
+                </div>
+              </div>`;
+          }
 
           return `
             <div class="show-item" style="border:2px solid var(--purple);border-radius:12px;">
-              ${leftCol}
+              ${dateBlock}
               ${infoBlock}
               <div></div>
               ${ticketBlock}
