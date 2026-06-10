@@ -609,8 +609,8 @@
   <a class="skip-link" href="#main">Saltar al contenido</a>
 
   <!-- TOP BAR -->
-  <div class="topbar">
-    🎤 <strong>Starlyn Ramírez: El Sobreviviente</strong> — 27 de Junio, Velvet Room, Santo Domingo — <a href="#shows">Ver Fechas</a>
+  <div class="topbar" id="topbar" style="display:none">
+    🎤 <span id="topbar-text"></span> — <a href="#shows">Ver Fechas</a>
   </div>
 
   <!-- HEADER -->
@@ -873,6 +873,16 @@
         if (!data.shows || data.shows.length === 0) {
           list.innerHTML = '<p style="text-align:center;color:var(--brown);padding:24px">No hay shows programados por el momento.</p>';
           return;
+        }
+
+        // Topbar con el primer show
+        const next = data.shows[0];
+        if (next && !next.soldOut) {
+          const months = {Jan:'Enero',Feb:'Febrero',Mar:'Marzo',Apr:'Abril',May:'Mayo',Jun:'Junio',Jul:'Julio',Aug:'Agosto',Sep:'Septiembre',Oct:'Octubre',Nov:'Noviembre',Dec:'Diciembre'};
+          const venueName = next.city.split('·')[0].trim();
+          document.getElementById('topbar-text').innerHTML =
+            `<strong>${next.venue.trim()}</strong> — ${next.day} de ${months[next.month]||next.month}, ${venueName}, Santo Domingo`;
+          document.getElementById('topbar').style.display = '';
         }
         list.innerHTML = data.shows.map(s => {
           const dateBlock = `
