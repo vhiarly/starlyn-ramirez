@@ -550,6 +550,18 @@
     }
 
     @media (max-width: 640px) {
+      html {
+        scroll-snap-type: y mandatory;
+        scroll-padding-top: 64px;
+      }
+      section {
+        scroll-snap-align: start;
+        min-height: calc(100dvh - 64px);
+        padding: 36px 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
       .nav-links { display: none; }
       .hamburger { display: flex; }
       .header-inner { position: relative; justify-content: center; }
