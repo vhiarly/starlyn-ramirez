@@ -70,13 +70,11 @@
       height: 64px;
     }
 
-    .logo {
-      font-size: 22px; font-weight: 900;
-      letter-spacing: -.02em;
-      color: var(--dark);
-      text-transform: uppercase;
+    .logo img {
+      height: 40px;
+      width: auto;
+      display: block;
     }
-    .logo span { color: var(--purple); }
 
     .nav-links {
       display: flex; gap: 4px; list-style: none;
@@ -237,6 +235,25 @@
       transition: box-shadow .2s;
     }
     .show-item:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+
+    .show-item.has-flyer {
+      grid-template-columns: 1fr;
+      padding: 0;
+      overflow: hidden;
+    }
+    .show-flyer-img {
+      width: 100%;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .show-flyer-footer {
+      display: grid;
+      grid-template-columns: 100px 1fr auto auto;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 24px;
+    }
 
     .show-date {
       text-align: center;
@@ -511,6 +528,8 @@
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .show-item { grid-template-columns: 80px 1fr auto; }
       .show-item .btn-tickets { grid-column: 3; }
+      .show-flyer-footer { grid-template-columns: 80px 1fr auto; }
+      .show-flyer-footer .btn-tickets { grid-column: 3; }
     }
 
     @media (max-width: 640px) {
@@ -524,6 +543,12 @@
       }
       .show-item .sold-out,
       .show-item .btn-tickets { grid-column: 1 / -1; }
+      .show-flyer-footer {
+        grid-template-columns: 70px 1fr;
+        grid-template-rows: auto auto;
+      }
+      .show-flyer-footer .sold-out,
+      .show-flyer-footer .btn-tickets { grid-column: 1 / -1; }
       .album-card { flex-direction: column; }
     }
 
@@ -544,7 +569,7 @@
   <!-- HEADER -->
   <header>
     <div class="header-inner">
-      <a class="logo" href="#"><span>Starlyn</span> Ramírez</a>
+      <a class="logo" href="#"><img src="SRLOGO_NEGRO.png" alt="Starlyn Ramírez" /></a>
 
       <ul class="nav-links">
         <li><a href="#shows">Shows</a></li>
@@ -676,7 +701,8 @@
 
             <div class="about-contact">
               <h4>Booking & Prensa</h4>
-              <a href="mailto:booking@starlynramirez.com">booking@starlynramirez.com</a>
+              <p style="font-size:15px;font-weight:600;color:var(--dark);margin-bottom:4px;">Randy Holguín</p>
+              <a href="mailto:randyholguin@panzamedia.com">Randyholguin@panzamedia.com</a>
             </div>
 
             <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
@@ -754,7 +780,7 @@
             <li><a href="#shows">Shows</a></li>
             <li><a href="https://www.instagram.com/ztarlyn/" target="_blank">Instagram @ztarlyn</a></li>
             <li><a href="https://www.imdb.com/name/nm11854945/" target="_blank">IMDb</a></li>
-            <li><a href="mailto:booking@starlynramirez.com">Booking</a></li>
+            <li><a href="mailto:randyholguin@panzamedia.com">Booking</a></li>
             <li><a href="mailto:prensa@starlynramirez.com">Prensa</a></li>
           </ul>
         </div>
@@ -794,24 +820,43 @@
           list.innerHTML = '<p style="text-align:center;color:var(--brown);padding:24px">No hay shows programados por el momento.</p>';
           return;
         }
-        list.innerHTML = data.shows.map(s => `
-          <div class="show-item" style="border:2px solid var(--purple);border-radius:12px;">
+        list.innerHTML = data.shows.map(s => {
+          const dateBlock = `
             <div class="show-date">
               <div class="month">${s.month}</div>
               <div class="day">${s.day}</div>
               <div class="year">${s.year}</div>
-            </div>
+            </div>`;
+          const infoBlock = `
             <div class="show-info">
               <div class="venue">${s.venue}</div>
               <div class="location">${s.city}</div>
               <div class="details">${s.details}</div>
-            </div>
-            <div></div>
-            ${s.soldOut
-              ? '<span class="sold-out">Agotado</span>'
-              : `<a href="${s.ticketUrl}" target="_blank" class="btn-tickets">Boletas</a>`
-            }
-          </div>`).join('');
+            </div>`;
+          const ticketBlock = s.soldOut
+            ? '<span class="sold-out">Agotado</span>'
+            : `<a href="${s.ticketUrl}" target="_blank" class="btn-tickets">Boletas</a>`;
+
+          if (s.image) {
+            return `
+              <div class="show-item has-flyer" style="border:2px solid var(--purple);border-radius:12px;">
+                <img src="${s.image}" alt="Flyer ${s.venue}" class="show-flyer-img" />
+                <div class="show-flyer-footer">
+                  ${dateBlock}
+                  ${infoBlock}
+                  <div></div>
+                  ${ticketBlock}
+                </div>
+              </div>`;
+          }
+          return `
+            <div class="show-item" style="border:2px solid var(--purple);border-radius:12px;">
+              ${dateBlock}
+              ${infoBlock}
+              <div></div>
+              ${ticketBlock}
+            </div>`;
+        }).join('');
       })
       .catch(() => {
         document.getElementById('shows-list').innerHTML =

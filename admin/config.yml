@@ -28,6 +28,7 @@ collections:
               - { label: "Detalles",       name: details,   widget: string, hint: "Ej: Show: 8:00 PM · Precio: RD$500" }
               - { label: "Link de Boletas", name: ticketUrl, widget: string }
               - { label: "Agotado",        name: soldOut,   widget: boolean, default: false }
+              - { label: "Flyer del Show", name: image,     widget: image,   required: false, hint: "Imagen del flyer (opcional)" }
 
   - name: bio
     label: "📝 Biografía"
