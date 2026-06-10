@@ -860,21 +860,15 @@
             : `<a href="${s.ticketUrl}" target="_blank" class="btn-tickets">Boletas</a>`;
 
           if (s.image) {
-            const months = {Jan:'Enero',Feb:'Febrero',Mar:'Marzo',Apr:'Abril',May:'Mayo',Jun:'Junio',Jul:'Julio',Aug:'Agosto',Sep:'Septiembre',Oct:'Octubre',Nov:'Noviembre',Dec:'Diciembre'};
-            const showTitle = s.venue.includes(':') ? s.venue.split(':')[1].trim() : s.venue;
-            const venueName = s.city.split('·')[0].trim();
-            const address   = s.city.split('·').slice(1).join('·').trim();
-            const monthFull = months[s.month] || s.month;
             return `
               <div class="show-item has-flyer" style="border:2px solid var(--purple);border-radius:12px;">
                 <div class="show-right">
                   <img src="${s.image}" alt="Flyer ${s.venue}" />
                 </div>
                 <div class="show-left">
-                  <div style="font-size:15px;font-weight:800;color:var(--dark);line-height:1.3;">${showTitle} <span style="color:var(--brown);font-weight:600;">@ ${venueName}</span></div>
-                  <div style="font-size:13px;font-weight:600;color:var(--purple);margin-top:4px;">${s.day} de ${monthFull} · ${s.year}</div>
-                  <div style="font-size:12px;color:var(--brown);margin-top:4px;">${address}</div>
-                  <div style="font-size:12px;color:#888;margin-top:2px;">${s.details}</div>
+                  <div style="font-size:15px;font-weight:800;color:var(--dark);line-height:1.3;">${s.venue.trim()}</div>
+                  <div style="font-size:12px;color:var(--brown);margin-top:6px;">${s.city}</div>
+                  <div style="font-size:12px;color:#888;margin-top:3px;">${s.details}</div>
                   <div style="margin-top:12px;">${ticketBlock}</div>
                 </div>
               </div>`;
