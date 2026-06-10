@@ -248,14 +248,15 @@
     }
     .show-item.has-flyer .show-right img {
       width: 180px;
-      aspect-ratio: 3/4;
+      height: 180px;
+      aspect-ratio: 1/1;
       object-fit: cover;
       border-radius: 10px;
       display: block;
     }
     @media (max-width: 640px) {
       .show-item.has-flyer { grid-template-columns: 110px 1fr; padding: 16px; }
-      .show-item.has-flyer .show-right img { width: 110px; }
+      .show-item.has-flyer .show-right img { width: 110px; height: 110px; }
     }
 
     .show-date {
