@@ -4,9 +4,115 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin · Starlyn Ramírez</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #574cd5 0%, #796b62 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 48px;
+      max-width: 500px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+      text-align: center;
+    }
+    h1 { color: #1a1714; margin-bottom: 12px; font-size: 28px; }
+    p { color: #3d3530; line-height: 1.6; margin-bottom: 24px; }
+    .user-info {
+      background: #f7f4f0;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 24px 0;
+      font-size: 14px;
+      color: #3d3530;
+    }
+    .user-info strong { display: block; color: #1a1714; margin-bottom: 4px; }
+    .btn {
+      display: inline-block;
+      background: #574cd5;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      transition: opacity .2s;
+      text-decoration: none;
+    }
+    .btn:hover { opacity: .9; }
+    .btn-logout {
+      background: #c0392b;
+      margin-left: 10px;
+    }
+    .hidden { display: none; }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <div id="logged-out" class="hidden">
+      <h1>🔐 Panel de Admin</h1>
+      <p>Por favor, inicia sesión para acceder al panel administrativo.</p>
+      <button class="btn" onclick="netlifAuth()">Iniciar sesión</button>
+    </div>
+
+    <div id="logged-in" class="hidden">
+      <h1>¡Bienvenido! 👋</h1>
+      <p>Panel administrativo de Starlyn Ramírez</p>
+
+      <div class="user-info">
+        <strong>Usuario:</strong>
+        <span id="user-email">-</span>
+      </div>
+
+      <p style="font-size: 14px; margin: 24px 0;">
+        Para editar shows, especiales y biografía, ve a:<br>
+        <strong style="color: #574cd5;">GitHub → starlyn-ramirez/Documents/comedian-website/_data/</strong>
+      </p>
+
+      <div style="display: flex; justify-content: center; gap: 10px;">
+        <a href="/" class="btn">Ir al sitio</a>
+        <button class="btn btn-logout" onclick="logout()">Salir</button>
+      </div>
+    </div>
+  </div>
+
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    const loggedOut = document.getElementById('logged-out');
+    const loggedIn = document.getElementById('logged-in');
+    const userEmail = document.getElementById('user-email');
+
+    function checkAuth() {
+      if (window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
+        loggedOut.classList.add('hidden');
+        loggedIn.classList.remove('hidden');
+        userEmail.textContent = window.netlifyIdentity.currentUser().email;
+      } else {
+        loggedOut.classList.remove('hidden');
+        loggedIn.classList.add('hidden');
+      }
+    }
+
+    function netlifAuth() {
+      window.netlifyIdentity.open();
+    }
+
+    function logout() {
+      window.netlifyIdentity.logout().then(() => checkAuth());
+    }
+
+    window.netlifyIdentity.on('init', checkAuth);
+    window.netlifyIdentity.on('login', checkAuth);
+    window.netlifyIdentity.on('logout', checkAuth);
+
+    checkAuth();
+  </script>
 </body>
 </html>
