@@ -2,63 +2,55 @@ backend:
   name: git-gateway
   branch: main
 
-locale: es
-
-media_folder: images
+media_folder: /images
 public_folder: /images
 
 collections:
   - name: shows
-    label: "📅 Próximos Shows"
-    files:
-      - label: "Lista de Shows"
-        name: shows
-        file: _data/shows.json
-        fields:
-          - label: Shows
-            name: shows
-            widget: list
-            summary: "{{fields.venue}} — {{fields.city}}"
-            fields:
-              - { label: "Día",            name: day,       widget: string, hint: "Ej: 27" }
-              - { label: "Mes",            name: month,     widget: string, hint: "Ej: Jun" }
-              - { label: "Año",            name: year,      widget: string, hint: "Ej: 2026" }
-              - { label: "Nombre del Show", name: venue,    widget: string }
-              - { label: "Lugar y Ciudad", name: city,      widget: string, hint: "Ej: Velvet Room · Santo Domingo, RD" }
-              - { label: "Detalles",       name: details,   widget: string, hint: "Ej: Show: 8:00 PM · Precio: RD$500" }
-              - { label: "Link de Boletas", name: ticketUrl, widget: string }
-              - { label: "Agotado",        name: soldOut,   widget: boolean, default: false }
-              - { label: "Flyer del Show", name: image,     widget: image,   required: false, hint: "Imagen del flyer (opcional)" }
-
-  - name: bio
-    label: "📝 Biografía"
-    files:
-      - label: "Texto de Biografía"
-        name: bio
-        file: _data/bio.json
-        fields:
-          - { label: "Introducción",        name: intro, widget: text }
-          - { label: "Párrafo 1 (Formación)", name: p1,  widget: text }
-          - { label: "Párrafo 2 (Radio/TV)", name: p2,   widget: text }
-          - { label: "Párrafo 3 (Stand-up)", name: p3,   widget: text }
-          - { label: "Párrafo 4 (Botón de Oro / Vainas)", name: p4, widget: text }
-          - { label: "Párrafo 5 (Sambil)",   name: p5,   widget: text }
-          - { label: "Párrafo 6 (Estilo de humor)", name: p6, widget: text }
+    label: Shows
+    folder: /_data
+    file: shows.json
+    format: json
+    create: false
+    fields:
+      - { label: Shows, name: shows, widget: list, fields: [
+          { label: Mes, name: month, widget: string },
+          { label: Día, name: day, widget: number },
+          { label: Año, name: year, widget: number },
+          { label: Venue, name: venue, widget: string },
+          { label: Ciudad, name: city, widget: string },
+          { label: Detalles, name: details, widget: string },
+          { label: URL Boletas, name: ticketUrl, widget: string, required: false },
+          { label: Flyer, name: image, widget: image, required: false },
+          { label: Sold Out, name: soldOut, widget: boolean, default: false }
+        ] }
 
   - name: specials
-    label: "🎬 Especiales"
-    files:
-      - label: "Lista de Especiales"
-        name: specials
-        file: _data/specials.json
-        fields:
-          - label: Especiales
-            name: specials
-            widget: list
-            summary: "{{fields.title}}"
-            fields:
-              - { label: "Título",         name: title,     widget: string }
-              - { label: "Formato",        name: format,    widget: string, hint: "Ej: Especial Completo · YouTube" }
-              - { label: "ID de YouTube",  name: youtubeId, widget: string, hint: "Los caracteres al final del link de YouTube. Ej: ywnWCcExTG8" }
-              - { label: "Badge",          name: badge,     widget: string, required: false, hint: "Ej: Nuevo, Colaboración — dejar vacío para no mostrar" }
-              - { label: "Badge estilo Nuevo", name: badgeNew, widget: boolean, default: false }
+    label: Especiales de Comedia
+    folder: /_data
+    file: specials.json
+    format: json
+    create: false
+    fields:
+      - { label: Especiales, name: specials, widget: list, fields: [
+          { label: Título, name: title, widget: string },
+          { label: Formato, name: format, widget: string },
+          { label: YouTube ID, name: youtubeId, widget: string },
+          { label: Badge, name: badge, widget: string, required: false },
+          { label: Badge Nuevo, name: badgeNew, widget: boolean, default: false }
+        ] }
+
+  - name: bio
+    label: Biografía
+    folder: /_data
+    file: bio.json
+    format: json
+    create: false
+    fields:
+      - { label: Intro, name: intro, widget: text }
+      - { label: Párrafo 1, name: p1, widget: text }
+      - { label: Párrafo 2, name: p2, widget: text }
+      - { label: Párrafo 3, name: p3, widget: text }
+      - { label: Párrafo 4, name: p4, widget: text }
+      - { label: Párrafo 5, name: p5, widget: text }
+      - { label: Párrafo 6, name: p6, widget: text }
