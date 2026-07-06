@@ -2,55 +2,63 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: /images
+media_folder: images
 public_folder: /images
 
 collections:
   - name: shows
     label: Shows
-    folder: /_data
-    file: shows.json
-    format: json
-    create: false
-    fields:
-      - { label: Shows, name: shows, widget: list, fields: [
-          { label: Mes, name: month, widget: string },
-          { label: Día, name: day, widget: number },
-          { label: Año, name: year, widget: number },
-          { label: Venue, name: venue, widget: string },
-          { label: Ciudad, name: city, widget: string },
-          { label: Detalles, name: details, widget: string },
-          { label: URL Boletas, name: ticketUrl, widget: string, required: false },
-          { label: Flyer, name: image, widget: image, required: false },
-          { label: Sold Out, name: soldOut, widget: boolean, default: false }
-        ] }
+    files:
+      - name: shows
+        label: Shows
+        file: _data/shows.json
+        fields:
+          - label: Shows
+            name: shows
+            widget: list
+            label_singular: Show
+            summary: "{{fields.venue}}"
+            fields:
+              - { label: Mes, name: month, widget: string, hint: "Ej: Jun" }
+              - { label: Día, name: day, widget: string, hint: "Ej: 27" }
+              - { label: Año, name: year, widget: string, hint: "Ej: 2026" }
+              - { label: Venue / Título, name: venue, widget: string }
+              - { label: Ciudad / Lugar, name: city, widget: string }
+              - { label: Detalles, name: details, widget: string }
+              - { label: URL Boletas, name: ticketUrl, widget: string, required: false }
+              - { label: Flyer, name: image, widget: image, required: false }
+              - { label: Sold Out, name: soldOut, widget: boolean, default: false }
 
   - name: specials
     label: Especiales de Comedia
-    folder: /_data
-    file: specials.json
-    format: json
-    create: false
-    fields:
-      - { label: Especiales, name: specials, widget: list, fields: [
-          { label: Título, name: title, widget: string },
-          { label: Formato, name: format, widget: string },
-          { label: YouTube ID, name: youtubeId, widget: string },
-          { label: Badge, name: badge, widget: string, required: false },
-          { label: Badge Nuevo, name: badgeNew, widget: boolean, default: false }
-        ] }
+    files:
+      - name: specials
+        label: Especiales de Comedia
+        file: _data/specials.json
+        fields:
+          - label: Especiales
+            name: specials
+            widget: list
+            label_singular: Especial
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Título, name: title, widget: string }
+              - { label: Formato, name: format, widget: string, hint: "Ej: Especial · YouTube" }
+              - { label: YouTube ID, name: youtubeId, widget: string, hint: "Solo el ID, ej: ywnWCcExTG8" }
+              - { label: Badge, name: badge, widget: string, required: false, hint: "Ej: Nuevo, Colaboración" }
+              - { label: Badge Nuevo, name: badgeNew, widget: boolean, default: false }
 
   - name: bio
     label: Biografía
-    folder: /_data
-    file: bio.json
-    format: json
-    create: false
-    fields:
-      - { label: Intro, name: intro, widget: text }
-      - { label: Párrafo 1, name: p1, widget: text }
-      - { label: Párrafo 2, name: p2, widget: text }
-      - { label: Párrafo 3, name: p3, widget: text }
-      - { label: Párrafo 4, name: p4, widget: text }
-      - { label: Párrafo 5, name: p5, widget: text }
-      - { label: Párrafo 6, name: p6, widget: text }
+    files:
+      - name: bio
+        label: Biografía
+        file: _data/bio.json
+        fields:
+          - { label: Intro, name: intro, widget: text }
+          - { label: Párrafo 1, name: p1, widget: text }
+          - { label: Párrafo 2, name: p2, widget: text }
+          - { label: Párrafo 3, name: p3, widget: text }
+          - { label: Párrafo 4, name: p4, widget: text }
+          - { label: Párrafo 5, name: p5, widget: text }
+          - { label: Párrafo 6, name: p6, widget: text }
