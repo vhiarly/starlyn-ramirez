@@ -737,7 +737,7 @@
         <div class="about-grid">
 
           <div class="about-photo">
-            <img src="starlyn-bio.jpg" alt="Foto de Starlyn Ramírez" loading="lazy" />
+            <img id="bio-photo" src="starlyn-bio.jpg" alt="Foto de Starlyn Ramírez" loading="lazy" />
           </div>
 
           <div class="about-text">
@@ -965,6 +965,7 @@
           <p>${b.p4}</p>
           <p>${b.p5}</p>
           <p>${b.p6}</p>`;
+        if (b.foto) document.getElementById('bio-photo').src = b.foto;
       });
 
     // ── MOBILE MENU ──

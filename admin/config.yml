@@ -55,6 +55,7 @@ collections:
         label: Biografía
         file: _data/bio.json
         fields:
+          - { label: Foto, name: foto, widget: image, required: false, hint: "La foto de la sección Sobre Mí" }
           - { label: Intro, name: intro, widget: text }
           - { label: Párrafo 1, name: p1, widget: text }
           - { label: Párrafo 2, name: p2, widget: text }
